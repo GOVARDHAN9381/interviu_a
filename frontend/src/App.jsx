@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import Home from './pages/Home';
@@ -133,9 +133,9 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AppContent />
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

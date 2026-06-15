@@ -99,6 +99,7 @@ export default function Login() {
             <div style={{ position: 'relative' }}>
               <Mail size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
               <input 
+                id="email"
                 type="email" 
                 placeholder="you@example.com"
                 required
@@ -130,6 +131,7 @@ export default function Login() {
             <div style={{ position: 'relative' }}>
               <Lock size={18} style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
               <input 
+                id="password"
                 type="password" 
                 placeholder="••••••••"
                 required
@@ -154,6 +156,7 @@ export default function Login() {
           </div>
 
           <button
+            id="login-button"
             type="submit"
             className="btn-primary"
             disabled={loading}
