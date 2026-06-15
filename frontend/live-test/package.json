@@ -1,0 +1,12 @@
+{
+  "name": "interviu-live-tests",
+  "version": "1.0.0",
+  "description": "Live automated tests for Interviu AI web application",
+  "scripts": {
+    "test": "node test-runner.js"
+  },
+  "dependencies": {
+    "playwright": "^1.52.0",
+    "exceljs": "^4.4.0"
+  }
+}
