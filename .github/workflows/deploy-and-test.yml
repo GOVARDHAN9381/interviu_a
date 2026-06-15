@@ -31,10 +31,11 @@ jobs:
         run: npm run build
 
       - name: Deploy to GitHub Pages
-        working-directory: ./frontend
-        run: npx gh-pages -d dist -u "github-actions-bot <support+actions@github.com>"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/dist
+          keep_files: true
 
       - name: Wait for GitHub Pages Deployment
         run: sleep 30 # Give GitHub Pages time to propagate
