@@ -49,14 +49,14 @@ jobs:
         working-directory: ./frontend
         run: npm run login
         env:
-          BASE_URL: https://GOVARDHAN9381.github.io/interviu_a/
+          BASE_URL: https://GOVARDHAN9381.github.io/interviu_a/#/login
 
       - name: Generate Reports
         if: always()
         working-directory: ./frontend
         run: npm run report
         env:
-          BASE_URL: https://GOVARDHAN9381.github.io/interviu_a/
+          BASE_URL: https://GOVARDHAN9381.github.io/interviu_a/#/login
 
       - name: Upload Test Artifacts
         if: always()
