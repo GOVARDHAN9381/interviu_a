@@ -1,0 +1,92 @@
+name: Android Appium E2E
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [31]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Install Dependencies
+        working-directory: ./frontend
+        run: npm ci --legacy-peer-deps
+
+      - name: Build Web Assets
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Add Android Platform
+        working-directory: ./frontend
+        run: |
+          npm install @capacitor/android
+          npx cap add android || true
+          npx cap sync android
+
+      - name: Build APK
+        working-directory: ./frontend/android
+        run: ./gradlew assembleDebug
+
+      - name: Start Appium Server
+        working-directory: ./frontend
+        run: |
+          npm install -g appium
+          appium driver install uiautomator2
+          appium &
+          npx wait-on http://127.0.0.1:4723/status
+
+      - name: Run Appium Tests in Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: default
+          arch: x86_64
+          profile: pixel_4
+          script: |
+            cd frontend
+            export APK_PATH=$(pwd)/android/app/build/outputs/apk/debug/app-debug.apk
+            npm run appium || true
+
+      - name: Generate Reports
+        if: always()
+        working-directory: ./frontend
+        run: npm run report
+
+      - name: Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Appium-Test-Results
+          path: frontend/Test Results/
+
+      - name: Publish Reports to GitHub Pages (History)
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./frontend/Test Results/HTML
+          destination_dir: reports/latest
+          keep_files: true
