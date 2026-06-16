@@ -47,7 +47,7 @@ jobs:
 
       - name: Run Live Selenium Tests
         working-directory: ./frontend
-        run: npm run login
+        run: npm run e2e
         env:
           BASE_URL: https://GOVARDHAN9381.github.io/interviu_a/#/login
 

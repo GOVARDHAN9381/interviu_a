@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "login": "mocha selenium-tests/tests/login.test.js --timeout 30000 --reporter mochawesome --reporter-options reportDir=\"Test Results/HTML\",html=true,json=true",
+    "e2e": "mocha selenium-tests/tests/e2e.test.js --timeout 30000 --reporter mochawesome --reporter-options reportDir=\"Test Results/HTML\",html=true,json=true",
     "report": "node selenium-tests/generate-excel.js",
     "appium": "mocha appium-tests/tests/app.test.js --timeout 120000 --reporter mochawesome --reporter-options reportDir=\"Test Results/HTML\",html=true,json=true"
   },
